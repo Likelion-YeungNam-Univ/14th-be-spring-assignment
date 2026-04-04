@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorCode {
 
     // 아기사자 관련
-    LIKELION_NOT_FOUND(404,"사용자를 찾을 수 없습니다."),
+    LIKELION_NOT_FOUND(404,"아기사자를 찾을 수 없습니다."),
 
     // 일반 오류
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류입니다.");
