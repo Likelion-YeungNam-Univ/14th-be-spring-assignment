@@ -14,33 +14,51 @@ public class BabyLion {
     // 아래 필드들의 조건에 따라 DTO구성, Validation, Service의 예외처리를 적절하게 해주시면 됩니다.
     // 그 외 현실상황에서 디테일하게 처리하고 싶은 부분은 더 처리해주셔도 좋습니다.
 
-    // 식별자
-    // 반드시 Repository에서 생성 시 정해져야하며, 직접 id를 초기화하면 안됨
-    // 수정 불가능 주의
+    /**
+     * 식별자 (ID)
+     * - 제약: 중복 방지 (Unique)
+     * - 주의: Repository 저장 시 자동 생성되며, 직접 초기화 및 수정 불가
+     */
     public Long id;
 
-    // 아기사자 이름
-    // 최소 2자에서 최대 12자
+    /**
+     * 아기사자 이름
+     * - 제약: 최소 2자 ~ 최대 12자
+     */
     public String name;
 
-    // 학번
-    // 수정 불가능 주의
+    /**
+     * 학번 (Student ID)
+     * - 제약: 중복 방지 (Unique)
+     * - 주의: 생성 후 수정 불가
+     */
     public String studentId;
 
-    // 이메일
-    // 이메일 형식이어야 함 abc@abc.com와 같은 이메일 형태
+    /**
+     * 이메일
+     * - 제약: 이메일 형식 (예: abc@abc.com), 중복 방지 (Unique)
+     */
     public String email;
 
-    // 전화번호
-    // 000-0000-0000 의 형식을 따라야함 (정규식을 찾아 공부해서 구현)
+    /**
+     * 전화번호
+     * - 제약: 000-0000-0000 형식 준수 (정규식 활용)
+     */
     public String phoneNumber;
 
-    // 자기소개
-    // 빈칸일 수 없음
+    /**
+     * 자기소개
+     * - 제약: Not Blank (빈칸/공백 불가)
+     */
     public String introduction;
 
 
-    // 식별자 중복 방지 로직
+    /* --- 비즈니스 로직 및 편의 메서드 --- */
+
+    /**
+     * 식별자 설정을 위한 메서드
+     * Repository의 시퀀스 로직에서 사용되며, 외부에서의 직접 호출은 권장하지 않습니다.
+     */
     public void setId(long l) {
         this.id = l;
     }
