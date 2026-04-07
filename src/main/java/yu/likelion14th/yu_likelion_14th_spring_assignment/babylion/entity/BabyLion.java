@@ -34,6 +34,13 @@ public class BabyLion {
      */
     public String studentId;
 
+
+    /**
+     * 학년
+     * - 제약: 1~4 사이의 값
+     */
+    public Integer grade;
+
     /**
      * 이메일
      * - 제약: 이메일 형식 (예: abc@abc.com), 중복 방지 (Unique)

@@ -10,7 +10,7 @@ import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyL
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/likelions") // 내부에 공통 엔드포인트 입력
+@RequestMapping("/api/v1/babylions") // 내부에 공통 엔드포인트 입력
 public class BabyLionController {
 
     private final BabyLionService babyLionService;

@@ -3,7 +3,6 @@ package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLion;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.repository.BabyLionRepository;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.repository.InMemoryBabyLionRepository;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.CustomException;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.ErrorCode;
@@ -29,7 +28,7 @@ public class BabyLionService {
 
         // 아기사자 엔티티 불러오기 -> 없으면 404 예외처리
         BabyLion target = babyLionRepository.findById(id).orElseThrow(
-                () -> new CustomException(ErrorCode.LIKELION_NOT_FOUND)
+                () -> new CustomException(ErrorCode.BABYLION_NOT_FOUND)
         );
 
         // 아기사자 정보 삭제
