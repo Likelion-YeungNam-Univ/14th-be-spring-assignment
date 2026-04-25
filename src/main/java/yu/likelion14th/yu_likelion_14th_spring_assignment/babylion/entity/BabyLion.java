@@ -61,6 +61,15 @@ public class BabyLion {
 
 
     /* --- 비즈니스 로직 및 편의 메서드 --- */
+    @Builder
+    public BabyLion(String name, String studentId, Integer grade, String email, String phoneNumber, String introduction) {
+        this.name = name;
+        this.studentId = studentId;
+        this.grade = grade;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.introduction = introduction;
+    }
 
     /**
      * 식별자 설정을 위한 메서드
@@ -71,5 +80,6 @@ public class BabyLion {
     }
 
     // 그 외 구현해보고 싶은 필드는 자유롭게 추가해서 활용
+
 
 }

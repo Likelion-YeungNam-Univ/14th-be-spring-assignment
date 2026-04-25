@@ -1,11 +1,12 @@
 package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.ResponseLionDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyLionService;
 
 @RestController
@@ -17,6 +18,20 @@ public class BabyLionController {
 
     // 구현 시작
 
+    /**
+     * 아기사자 등록
+     *
+     * @param createBabyLionReqDto 아기사자 정보 DTO
+     */
+    @PostMapping()
+    public ResponseEntity<String> createLion(
+            @RequestBody @Valid
+            CreateBabyLionReqDto createBabyLionReqDto
+    ) {
+
+        babyLionService.createLion(createBabyLionReqDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("아기사자 등록되었습니다.");
+    }
 
 
 

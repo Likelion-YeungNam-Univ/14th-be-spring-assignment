@@ -18,6 +18,7 @@ public class InMemoryBabyLionRepository implements BabyLionRepository{
     private static long sequence = 0L;
 
     // 엔티티 저장, 수정
+    @Override
     public BabyLion save(BabyLion babyLion) {
         if (babyLion.getId() == null) {
             babyLion.setId(++sequence);
@@ -27,18 +28,33 @@ public class InMemoryBabyLionRepository implements BabyLionRepository{
     }
 
     // 식별자 기반 엔티티 조회
+    @Override
     public Optional<BabyLion> findById(Long id) {
         return Optional.ofNullable(store.get(id));
     }
 
     // 전체 조회
+    @Override
     public List<BabyLion> findAll() {
         return new ArrayList<>(store.values());
     }
 
     // 엔티티 삭제
+    @Override
     public void delete(Long id) {
         store.remove(id);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return store.values().stream()
+                .anyMatch(lion -> lion.getEmail().equals(email));
+    }
+
+    @Override
+    public boolean existsByStudentId(String studentId) {
+        return store.values().stream()
+                .anyMatch(lion -> lion.getStudentId().equals(studentId));
     }
 
 }
