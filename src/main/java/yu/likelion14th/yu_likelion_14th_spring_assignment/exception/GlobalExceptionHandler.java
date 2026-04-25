@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     }
 
     // 일반 예외처리
-    @ExceptionHandler
+    @ExceptionHandler(Exception.class)
     protected ResponseEntity<?> customServerException(Exception e){
         log.error("INTERNAL_SERVER_ERROR", e);
         ErrorDto errorDto = new ErrorDto(ErrorCode.INTERNAL_SERVER_ERROR.getStatus(), ErrorCode.INTERNAL_SERVER_ERROR.getMessage());
