@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.ResponseLionDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyLionService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +25,8 @@ public class BabyLionController {
      *
      * @param createBabyLionReqDto 아기사자 정보 DTO
      */
-    @PostMapping()
-    public ResponseEntity<String> createLion(
+    @PostMapping
+    public ResponseEntity<String> createLion (
             @RequestBody @Valid
             CreateBabyLionReqDto createBabyLionReqDto
     ) {
@@ -33,7 +35,19 @@ public class BabyLionController {
         return ResponseEntity.status(HttpStatus.CREATED).body("아기사자 등록되었습니다.");
     }
 
+    /**
+     * 아기사자 조회 및 학년별 조회
+     *
+     * @param grade 학년
+     * @return 아기사자 정보 리스트
+     */
+    @GetMapping
+    public ResponseEntity<List<BabyLionResDto>> findLion (
+            @RequestParam(required = false) Integer grade
+    ) {
 
+        return ResponseEntity.ok(babyLionService.findLion(grade));
+    }
 
 
 

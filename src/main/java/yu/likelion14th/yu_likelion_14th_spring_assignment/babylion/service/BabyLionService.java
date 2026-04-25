@@ -3,11 +3,14 @@ package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLion;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.repository.BabyLionRepository;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.repository.InMemoryBabyLionRepository;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.CustomException;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.ErrorCode;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +37,19 @@ public class BabyLionService {
 
         BabyLion babyLion = createBabyLionReqDto.dtoToEntity();
         babyLionRepository.save(babyLion);
+    }
+
+    /**
+     * 아기사자 전체 조회 및 학년 별 조회
+     *
+     * @param grade 학년
+     * @return 아기사자 정보 리스트
+     */
+    public List<BabyLionResDto> findLion(Integer grade) {
+        return babyLionRepository.findAll().stream()
+                .filter(lion -> grade == null || lion.getGrade().equals(grade))
+                .map(lion -> new BabyLionResDto(lion.getName(), lion.getIntroduction()))
+                .toList();
     }
 
 
