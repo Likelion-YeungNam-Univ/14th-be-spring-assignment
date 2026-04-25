@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -62,6 +63,25 @@ public class BabyLion {
 
     /* --- 비즈니스 로직 및 편의 메서드 --- */
 
+    @Builder
+    public BabyLion(String name, String studentId, Integer grade, String email, String phoneNumber, String introduction) {
+        this.name = name;
+        this.studentId = studentId;
+        this.grade = grade;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.introduction = introduction;
+    }
+
+    // 아기사자 정보 수정
+    public void update(UpdateBabyLionReqDto UpdateBabyLionReqDto) {
+        if (UpdateBabyLionReqDto.name() != null) this.name = UpdateBabyLionReqDto.name();
+        if (UpdateBabyLionReqDto.grade() != null) this.grade = UpdateBabyLionReqDto.grade();
+        if (UpdateBabyLionReqDto.email() != null) this.email = UpdateBabyLionReqDto.email();
+        if (UpdateBabyLionReqDto.phoneNumber() != null) this.phoneNumber = UpdateBabyLionReqDto.phoneNumber();
+        if (UpdateBabyLionReqDto.introduction() != null && !UpdateBabyLionReqDto.introduction().isBlank()) this.introduction = UpdateBabyLionReqDto.introduction();
+    }
+
     /**
      * 식별자 설정을 위한 메서드
      * Repository의 시퀀스 로직에서 사용되며, 외부에서의 직접 호출은 권장하지 않습니다.
@@ -71,5 +91,6 @@ public class BabyLion {
     }
 
     // 그 외 구현해보고 싶은 필드는 자유롭게 추가해서 활용
+
 
 }
