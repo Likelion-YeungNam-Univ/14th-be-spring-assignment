@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionContactResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyLionService;
 
@@ -42,14 +43,26 @@ public class BabyLionController {
      * @return 아기사자 정보 리스트
      */
     @GetMapping
-    public ResponseEntity<List<BabyLionResDto>> findLion (
+    public ResponseEntity<List<BabyLionResDto>> findAllLions (
             @RequestParam(required = false) Integer grade
     ) {
 
-        return ResponseEntity.ok(babyLionService.findLion(grade));
+        return ResponseEntity.ok(babyLionService.findAllLions(grade));
     }
 
+    /**
+     * 아기사자 개별 연락처 조회
+     *
+     * @param id 아기사자 id
+     * @return 아기사자 연락처 정보
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<BabyLionContactResDto> findLion (
+            @PathVariable Long id
+    ) {
 
+        return ResponseEntity.ok(babyLionService.findLion(id));
+    }
 
 
 

@@ -3,6 +3,7 @@ package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionContactResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLion;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.repository.BabyLionRepository;
@@ -45,11 +46,23 @@ public class BabyLionService {
      * @param grade 학년
      * @return 아기사자 정보 리스트
      */
-    public List<BabyLionResDto> findLion(Integer grade) {
+    public List<BabyLionResDto> findAllLions(Integer grade) {
         return babyLionRepository.findAll().stream()
                 .filter(lion -> grade == null || lion.getGrade().equals(grade))
                 .map(lion -> new BabyLionResDto(lion.getName(), lion.getIntroduction()))
                 .toList();
+    }
+
+    /**
+     * 아기사자 개별 연락처 조회
+     *
+     * @param id 아기사자 id
+     * @return 아기사자 연락처 정보
+     */
+    public BabyLionContactResDto findLion(Long id) {
+
+        BabyLion babyLion = babyLionRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND));
+        return new BabyLionContactResDto(babyLion.email, babyLion.phoneNumber);
     }
 
 
