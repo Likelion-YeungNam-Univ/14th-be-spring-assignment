@@ -62,6 +62,7 @@ public class BabyLion {
 
 
     /* --- 비즈니스 로직 및 편의 메서드 --- */
+
     @Builder
     public BabyLion(String name, String studentId, Integer grade, String email, String phoneNumber, String introduction) {
         this.name = name;
@@ -72,6 +73,7 @@ public class BabyLion {
         this.introduction = introduction;
     }
 
+    // 아기사자 정보 수정
     public void update(UpdateBabyLionReqDto UpdateBabyLionReqDto) {
         if (UpdateBabyLionReqDto.name() != null) this.name = UpdateBabyLionReqDto.name();
         if (UpdateBabyLionReqDto.grade() != null) this.grade = UpdateBabyLionReqDto.grade();

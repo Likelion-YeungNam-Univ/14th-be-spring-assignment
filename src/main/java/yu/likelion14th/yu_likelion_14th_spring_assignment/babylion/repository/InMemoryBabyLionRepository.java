@@ -45,12 +45,14 @@ public class InMemoryBabyLionRepository implements BabyLionRepository{
         store.remove(id);
     }
 
+    // 이메일 중복 검증
     @Override
     public boolean existsByEmail(String email) {
         return store.values().stream()
                 .anyMatch(lion -> lion.getEmail().equals(email));
     }
 
+    // 학번 중복 검증
     @Override
     public boolean existsByStudentId(String studentId) {
         return store.values().stream()
