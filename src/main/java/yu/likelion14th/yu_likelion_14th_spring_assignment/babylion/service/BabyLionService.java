@@ -78,10 +78,25 @@ public class BabyLionService {
         BabyLion babyLion = babyLionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND));
 
+        // 이메일 중복 검사 (본인의 기존 이메일은 제외)
+        String newEmail = updateBabyLionReqDto.email();
+        if (newEmail != null
+                && !newEmail.equals(babyLion.getEmail())
+                && babyLionRepository.existsByEmail(newEmail)) {
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
+        }
+        // 소개 빈 문자열 검사
+        if (updateBabyLionReqDto.introduction() != null
+                && updateBabyLionReqDto.introduction().isBlank()) {
+            throw new CustomException(ErrorCode.INVALID_INPUT);
+        }
+
+        // 업데이트할 값이 null이면 원래 값 그대로 사용
         BabyLion updateLion = BabyLion.builder()
+                .studentId(babyLion.getStudentId())
                 .name(updateBabyLionReqDto.name() != null ? updateBabyLionReqDto.name() : babyLion.getName())
                 .grade(updateBabyLionReqDto.grade() != null ? updateBabyLionReqDto.grade() : babyLion.getGrade())
-                .email(updateBabyLionReqDto.email() != null ? updateBabyLionReqDto.email() : babyLion.getEmail())
+                .email(newEmail != null ? newEmail : babyLion.getEmail())
                 .phoneNumber(updateBabyLionReqDto.phoneNumber() != null ? updateBabyLionReqDto.phoneNumber() : babyLion.getPhoneNumber())
                 .introduction(updateBabyLionReqDto.introduction() != null ? updateBabyLionReqDto.introduction() : babyLion.getIntroduction())
                 .build();
