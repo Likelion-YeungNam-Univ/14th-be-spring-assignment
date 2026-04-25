@@ -65,7 +65,7 @@ public class BabyLionService {
 
         BabyLion babyLion = babyLionRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND));
-        return new BabyLionContactResDto(babyLion.email, babyLion.phoneNumber);
+        return new BabyLionContactResDto(babyLion.getEmail(), babyLion.getPhoneNumber());
     }
 
     /**
