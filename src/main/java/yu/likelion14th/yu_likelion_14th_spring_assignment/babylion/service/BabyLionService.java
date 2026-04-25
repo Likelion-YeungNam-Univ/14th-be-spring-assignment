@@ -3,6 +3,7 @@ package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionContactResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLion;
@@ -32,7 +33,7 @@ public class BabyLionService {
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
         // 학번 중복 검사
-        if(babyLionRepository.existsByEmail(createBabyLionReqDto.studentId())) {
+        if(babyLionRepository.existsByStudentId(createBabyLionReqDto.studentId())) {
             throw new CustomException(ErrorCode.DUPLICATE_STUDENT_ID);
         }
 
@@ -47,6 +48,7 @@ public class BabyLionService {
      * @return 아기사자 정보 리스트
      */
     public List<BabyLionResDto> findAllLions(Integer grade) {
+
         return babyLionRepository.findAll().stream()
                 .filter(lion -> grade == null || lion.getGrade().equals(grade))
                 .map(lion -> new BabyLionResDto(lion.getName(), lion.getIntroduction()))
@@ -61,8 +63,31 @@ public class BabyLionService {
      */
     public BabyLionContactResDto findLion(Long id) {
 
-        BabyLion babyLion = babyLionRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND));
+        BabyLion babyLion = babyLionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND));
         return new BabyLionContactResDto(babyLion.email, babyLion.phoneNumber);
+    }
+
+    /**
+     * 아기사자 정보 수정
+     *
+     * @param id 아기사자 id
+     * @param updateBabyLionReqDto 아기사자 정보 수정 DTO
+     */
+    public void updateLion(Long id, UpdateBabyLionReqDto updateBabyLionReqDto) {
+        BabyLion babyLion = babyLionRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND));
+
+        BabyLion updateLion = BabyLion.builder()
+                .name(updateBabyLionReqDto.name() != null ? updateBabyLionReqDto.name() : babyLion.getName())
+                .grade(updateBabyLionReqDto.grade() != null ? updateBabyLionReqDto.grade() : babyLion.getGrade())
+                .email(updateBabyLionReqDto.email() != null ? updateBabyLionReqDto.email() : babyLion.getEmail())
+                .phoneNumber(updateBabyLionReqDto.phoneNumber() != null ? updateBabyLionReqDto.phoneNumber() : babyLion.getPhoneNumber())
+                .introduction(updateBabyLionReqDto.introduction() != null ? updateBabyLionReqDto.introduction() : babyLion.getIntroduction())
+                .build();
+
+        updateLion.setId(id);
+        babyLionRepository.save(updateLion);
     }
 
 

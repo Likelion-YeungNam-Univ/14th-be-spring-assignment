@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionContactResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyLionService;
@@ -25,9 +26,10 @@ public class BabyLionController {
      * 아기사자 등록
      *
      * @param createBabyLionReqDto 아기사자 정보 DTO
+     * @return 성공: 201
      */
     @PostMapping
-    public ResponseEntity<String> createLion (
+    public ResponseEntity<?> createLion (
             @RequestBody @Valid
             CreateBabyLionReqDto createBabyLionReqDto
     ) {
@@ -64,7 +66,23 @@ public class BabyLionController {
         return ResponseEntity.ok(babyLionService.findLion(id));
     }
 
+    /**
+     * 아기사자 정보 수정
+     *
+     * @param id 아기사자 id
+     * @param updateBabyLionReqDto 아기사자 정보 수정 DTO
+     * @return 200
+     */
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateLion(
+            @PathVariable Long id,
+            @RequestBody @Valid
+            UpdateBabyLionReqDto updateBabyLionReqDto
+    ) {
 
+        babyLionService.updateLion(id, updateBabyLionReqDto);
+        return ResponseEntity.ok("아기사자 정보가 수정되었습니다.");
+    }
 
 
 
