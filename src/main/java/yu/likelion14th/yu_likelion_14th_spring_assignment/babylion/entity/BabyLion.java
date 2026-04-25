@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -69,6 +70,14 @@ public class BabyLion {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.introduction = introduction;
+    }
+
+    public void update(UpdateBabyLionReqDto UpdateBabyLionReqDto) {
+        if (UpdateBabyLionReqDto.name() != null) this.name = UpdateBabyLionReqDto.name();
+        if (UpdateBabyLionReqDto.grade() != null) this.grade = UpdateBabyLionReqDto.grade();
+        if (UpdateBabyLionReqDto.email() != null) this.email = UpdateBabyLionReqDto.email();
+        if (UpdateBabyLionReqDto.phoneNumber() != null) this.phoneNumber = UpdateBabyLionReqDto.phoneNumber();
+        if (UpdateBabyLionReqDto.introduction() != null && !UpdateBabyLionReqDto.introduction().isBlank()) this.introduction = UpdateBabyLionReqDto.introduction();
     }
 
     /**

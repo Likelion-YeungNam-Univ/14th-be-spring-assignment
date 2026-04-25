@@ -85,24 +85,9 @@ public class BabyLionService {
                 && babyLionRepository.existsByEmail(newEmail)) {
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
-        // 소개 빈 문자열 검사
-        if (updateBabyLionReqDto.introduction() != null
-                && updateBabyLionReqDto.introduction().isBlank()) {
-            throw new CustomException(ErrorCode.INVALID_INPUT);
-        }
 
-        // 업데이트할 값이 null이면 원래 값 그대로 사용
-        BabyLion updateLion = BabyLion.builder()
-                .studentId(babyLion.getStudentId())
-                .name(updateBabyLionReqDto.name() != null ? updateBabyLionReqDto.name() : babyLion.getName())
-                .grade(updateBabyLionReqDto.grade() != null ? updateBabyLionReqDto.grade() : babyLion.getGrade())
-                .email(newEmail != null ? newEmail : babyLion.getEmail())
-                .phoneNumber(updateBabyLionReqDto.phoneNumber() != null ? updateBabyLionReqDto.phoneNumber() : babyLion.getPhoneNumber())
-                .introduction(updateBabyLionReqDto.introduction() != null ? updateBabyLionReqDto.introduction() : babyLion.getIntroduction())
-                .build();
-
-        updateLion.setId(id);
-        babyLionRepository.save(updateLion);
+        babyLion.update(updateBabyLionReqDto);
+        babyLionRepository.save(babyLion);
     }
 
 
