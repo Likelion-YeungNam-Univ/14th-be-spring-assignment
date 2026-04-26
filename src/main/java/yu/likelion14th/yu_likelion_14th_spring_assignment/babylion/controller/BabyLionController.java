@@ -1,39 +1,63 @@
 package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.reseponse.BabyLionContactResDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.reseponse.BabyLionListResDto;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyLionService;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/api/v1/babylions")
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/babylions") // 내부에 공통 엔드포인트 입력
 public class BabyLionController {
 
     private final BabyLionService babyLionService;
 
-    // 구현 시작
+    // 1. 등록
+    @PostMapping
+    public ResponseEntity<?> postLion(
+            @RequestBody @Valid CreateBabyLionReqDto requestDto
+    ){
+        Long id = babyLionService.createLion(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
+    }
 
+    // 2. 전체 조회 + 학년 필터링
+    @GetMapping
+    public ResponseEntity<?> getLions(
+            @RequestParam(required = false) Integer grade
+    ){
+        List<BabyLionListResDto> result = babyLionService.getLions(grade);
+        return ResponseEntity.ok(result);
+    }
 
+    // 3. 개별 연락처 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getLionContact(
+            @PathVariable Long id
+    ){
+        BabyLionContactResDto result = babyLionService.getLionContact(id);
+        return ResponseEntity.ok(result);
+    }
 
+    // 4. 정보 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateLion(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateBabyLionReqDto requestDto
+    ){
+        babyLionService.updateLion(id, requestDto);
+        return ResponseEntity.ok().build();
+    }
 
-
-
-
-
-
-
-    // 예제
-
-    /**
-     * 아기사자 삭제 API
-     *
-     * @param id 아기사자 식별자(ID)
-     * @return 성공 여부 200/404
-     */
+    // 5. 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteLion(
             @PathVariable Long id
@@ -41,5 +65,4 @@ public class BabyLionController {
         babyLionService.deleteLion(id);
         return ResponseEntity.ok().build();
     }
-
 }

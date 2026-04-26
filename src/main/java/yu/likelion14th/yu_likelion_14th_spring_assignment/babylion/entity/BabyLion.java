@@ -59,9 +59,6 @@ public class BabyLion {
      */
     public String introduction;
 
-
-    /* --- 비즈니스 로직 및 편의 메서드 --- */
-
     /**
      * 식별자 설정을 위한 메서드
      * Repository의 시퀀스 로직에서 사용되며, 외부에서의 직접 호출은 권장하지 않습니다.
