@@ -10,35 +10,42 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class InMemoryBabyLionRepository implements BabyLionRepository{
+public class InMemoryBabyLionRepository implements BabyLionRepository {
 
-    // 인 메모리 저장
-    private static Map<Long, BabyLion> store = new HashMap<>();
-    // 식별자(ID) 생성을 위한 시퀀스
-    private static long sequence = 0L;
+    private final Map<Long, BabyLion> store = new HashMap<>();
+    private long sequence = 1L;
 
-    // 엔티티 저장, 수정
-    public BabyLion save(BabyLion babyLion) {
-        if (babyLion.getId() == null) {
-            babyLion.setId(++sequence);
-        }
-        store.put(babyLion.getId(), babyLion);
-        return babyLion;
+    public BabyLion save(BabyLion lion) {
+        lion.setId(sequence++);
+        store.put(lion.getId(), lion);
+        return lion;
     }
 
-    // 식별자 기반 엔티티 조회
-    public Optional<BabyLion> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
-    }
-
-    // 전체 조회
     public List<BabyLion> findAll() {
         return new ArrayList<>(store.values());
     }
 
-    // 엔티티 삭제
-    public void delete(Long id) {
-        store.remove(id);
+    public Optional<BabyLion> findById(Long id) {
+        return Optional.ofNullable(store.get(id));
     }
 
+    public List<BabyLion> findByGrade(Integer grade) {
+        return store.values().stream()
+                .filter(lion -> lion.getGrade().equals(grade))
+                .toList();
+    }
+
+    public void delete(BabyLion lion) {
+        store.remove(lion.getId());
+    }
+
+    public boolean existsByStudentId(String studentId) {
+        return store.values().stream()
+                .anyMatch(lion -> lion.getStudentId().equals(studentId));
+    }
+
+    public boolean existsByEmail(String email) {
+        return store.values().stream()
+                .anyMatch(lion -> lion.getEmail().equals(email));
+    }
 }

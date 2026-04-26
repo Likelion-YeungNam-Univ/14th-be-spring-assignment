@@ -1,37 +1,21 @@
 package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLion;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.repository.InMemoryBabyLionRepository;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.CustomException;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.ErrorCode;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.reseponse.BabyLionContactResDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.reseponse.BabyLionListResDto;
 
-@Service
-@RequiredArgsConstructor
-public class BabyLionService {
+import java.util.List;
 
-    private final InMemoryBabyLionRepository babyLionRepository;
+public interface BabyLionService {
 
-    // 구현 시작
+    Long createLion(CreateBabyLionReqDto requestDto);
 
+    List<BabyLionListResDto> getLions(Integer grade);
 
+    BabyLionContactResDto getLionContact(Long id);
 
-    // 예제
+    void updateLion(Long id, UpdateBabyLionReqDto requestDto);
 
-    /**
-     * 아기사자 삭제
-     *
-     * @param id 아기사자 식별자(ID)
-     */
-    public void deleteLion(Long id) {
-
-        // 아기사자 엔티티 불러오기 -> 없으면 404 예외처리
-        BabyLion target = babyLionRepository.findById(id).orElseThrow(
-                () -> new CustomException(ErrorCode.BABYLION_NOT_FOUND)
-        );
-
-        // 아기사자 정보 삭제
-        babyLionRepository.delete(target.getId());
-    }
+    void deleteLion(Long id);
 }
