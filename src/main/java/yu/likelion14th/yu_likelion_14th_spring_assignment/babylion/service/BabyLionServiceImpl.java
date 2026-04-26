@@ -90,6 +90,8 @@ public class BabyLionServiceImpl implements BabyLionService {
         if (requestDto.getPhoneNumber() != null) {
             lion.phoneNumber = requestDto.getPhoneNumber();
         }
+
+        inMemoryBabyLionRepository.save(lion);
     }
 
     // 5. 삭제
