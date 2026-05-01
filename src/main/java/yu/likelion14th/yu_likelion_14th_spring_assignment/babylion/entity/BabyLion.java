@@ -4,15 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 public class BabyLion {
-
-    // 아래 필드들의 조건에 따라 DTO구성, Validation, Service의 예외처리를 적절하게 해주시면 됩니다.
-    // 그 외 현실상황에서 디테일하게 처리하고 싶은 부분은 더 처리해주셔도 좋습니다.
 
     /**
      * 식별자 (ID)
@@ -33,7 +31,6 @@ public class BabyLion {
      * - 주의: 생성 후 수정 불가
      */
     public String studentId;
-
 
     /**
      * 학년
@@ -63,13 +60,24 @@ public class BabyLion {
     /* --- 비즈니스 로직 및 편의 메서드 --- */
 
     /**
+     * 아기사자 정보 수정 메서드
+     * PPT 설계: Entity가 자신의 상태 변경 책임을 가짐
+     * - id, studentId는 수정 불가 → 포함하지 않음
+     * - null이 들어오면 기존 값 유지 (부분 수정 지원)
+     */
+    public void update(UpdateBabyLionReqDto dto) {
+        if (dto.name() != null) this.name = dto.name();
+        if (dto.grade() != null) this.grade = dto.grade();
+        if (dto.email() != null) this.email = dto.email();
+        if (dto.phoneNumber() != null) this.phoneNumber = dto.phoneNumber();
+        if (dto.introduction() != null && !dto.introduction().isBlank()) this.introduction = dto.introduction();
+    }
+
+    /**
      * 식별자 설정을 위한 메서드
      * Repository의 시퀀스 로직에서 사용되며, 외부에서의 직접 호출은 권장하지 않습니다.
      */
     public void setId(long l) {
         this.id = l;
     }
-
-    // 그 외 구현해보고 싶은 필드는 자유롭게 추가해서 활용
-
 }
