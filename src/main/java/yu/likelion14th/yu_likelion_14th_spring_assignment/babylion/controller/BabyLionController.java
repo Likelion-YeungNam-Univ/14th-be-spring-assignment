@@ -1,11 +1,12 @@
 package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.CreateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.UpdateBabyLionReqDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLion;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyLionService;
 
 @RestController
@@ -17,11 +18,40 @@ public class BabyLionController {
 
     // 구현 시작
 
+    // 아기사자 등록 API
+    @PostMapping
+    public ResponseEntity<?> createLion(
+            @RequestBody @Valid CreateBabyLionReqDto dto
+    ) {
+        BabyLion babyLion = babyLionService.createLion(dto);
+        return ResponseEntity.ok(babyLion);
+    }
 
+    // 전체조회, 학년 필터링 API
+    @GetMapping
+    public ResponseEntity<?> getLions(
+            @RequestParam(required = false) Integer grade
+    ) {
+        return ResponseEntity.ok(babyLionService.getLions(grade));
+    }
 
+    // 개별 연락처 조회 API
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getLion(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(babyLionService.getLion(id));
+    }
 
-
-
+    // 아기사자 수정 API
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateLion(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateBabyLionReqDto dto
+    ) {
+        BabyLion babyLion = babyLionService.updateLion(id, dto);
+        return ResponseEntity.ok(babyLion);
+    }
 
 
 
