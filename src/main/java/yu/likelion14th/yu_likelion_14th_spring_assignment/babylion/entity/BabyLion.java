@@ -72,4 +72,14 @@ public class BabyLion {
 
     // 그 외 구현해보고 싶은 필드는 자유롭게 추가해서 활용
 
+    /**
+     * 수정 가능한 필드 업데이트 메서드
+     */
+    public void update(String name, Integer grade, String email, String phoneNumber, String introduction) {
+        if (name != null) {this.name = name;}
+        if (grade != null) {this.grade = grade;}
+        if (email != null) {this.email = email;}
+        if (phoneNumber != null) {this.phoneNumber = phoneNumber;}
+        if (introduction != null) {this.introduction = introduction;}
+    }
 }
