@@ -28,14 +28,18 @@ public class BabyLionController {
     public ResponseEntity<Void> createLion(
             @Valid @RequestBody CreateBabyLionReqDTO reqDTO){
         babyLionService.createBabyLion(reqDTO);
-        return ResponseEntity.status(HTTPStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
-     * 아기사자 전체 조회 API <- 수정 필요
+     * 아기사자 전체 조회 API
      */
     @GetMapping
-    public ResponseEntity<List<BabyLionLisstResDTO> getBabyLions(){}
+    public ResponseEntity<List<BabyLionListResDTO>> getBabyLions(
+        @RequestParam(required = false) Interger grade){ /// 파라미터가 없으면 전체로 반환
+        List<BabyLionListResDTO> response = babyLionService.getLions(grade);
+        return ResponseEntity.ok(response);
+    }
 
     /**
      * 아기사자 연락처 조회

@@ -21,27 +21,47 @@ public class BabyLionService {
      *아기사자 등록
      */
     public void createBabyLion(CreatebabyLionReqDTO reqDTO){
-
+        uniEmail(reqDTO.getEmail());
+        uniStudentId(reqDTO.getStudentId);
+        BabyLion babyLion = reqDTO.toEntity();
+        babyLionRepository.save(babyLion);
     }
 
     /**
      *아기사자 조회(전체 + 학년별 필터 조회
      */
     public List<BabyLionResDTO> getBabyLions(Integer grade){
-
+        return babyLionRepository.findAll()
+                .stream()
+                .filter(babyLion -> grade == null || babyLion.getGrade().equals(grade))
+                .map(BabyLionListResDTO::from)
+                .toList();
     }
 
     /**
      *아기사자 개별 연락처 조회
      */
     public BabyLionContactResDTO getBabyLionContact(Long id){
-
+        BabyLion babyLion = findBabyLionById(id);
+        return BabyLionContactResDTO.from(babyLion);
     }
     /**
      *아기사자 일부 정보 수정
      */
     public void updateBabyLion(Long id, UpdateBabyLionReqDto requestDto) {
+        BabyLion target = findBabyLionById(id);
+        uniEmail(requestDto.getEmail());
+        BabyLion updateBabyLion = BabyLion.builder()
+                .id(target.getId())
+                .studentid(target.getStudentId())
+                .name(requestDto.getName() != null ? requestDto.getName() : target.getName())
+                .grade(requestDto.getGrade() != null ? requestDto.getGrade() : target.getGrade())
+                .email(requestDto.getEmail() != null ? requestDto.getEmail() : target.getEmail())
+                .phoneNumber(requestDto.getPhoneNumber != null ? requestDto.getPhoneNumber() : target.getPhoneNumber())
+                .introduction(requestDto.getIntroduction != null ? requestDto.getIntroduction() : target.getIntroduction())
+                .build();
 
+        babyLionRepository.save(updateBabyLion);
     }
 
     /**
@@ -64,5 +84,32 @@ public class BabyLionService {
 
         // 아기사자 정보 삭제
         babyLionRepository.delete(target.getId());
+    }
+    /**
+     * 학번 중복 검사
+     */
+    private void uniStudentId(String studentId){
+        boolean isDuplicate = false;
+        for (BabyLion babyLion : babyLionRepository.findAll()){
+            if (babyLion.getStudentId().equals(studentId)){
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (isDuplicate) {
+            throw new CustomException(ErrorCode.STUDENT_ID_DUPLICATE);
+        }
+    }
+
+    /**
+     * 이메일 중복 검사
+     */
+    private void uniEmail(String email){
+        boolean isDuplicate = babyLionRepository.findAll()
+                .stream()
+                .anyMatch(babyLion -> babyLion.getEmail().equals(email));
+        if (isDuplicate){
+            throw new CustomException(ErrorCode.EMAIL_DUPLICATE);
+        }
     }
 }

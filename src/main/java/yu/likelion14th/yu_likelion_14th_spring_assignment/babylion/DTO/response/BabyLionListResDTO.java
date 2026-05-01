@@ -6,5 +6,12 @@ import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLi
 @Getter
 public class BabyLionListResDTO{
     // 임시
-    private
-}
+    private String name;
+    private String introduction;
+
+    public static BabyLionListResDTO from(BabyLion babyLion) {
+        return new BabyLionListResDTO(
+                babyLion.getName(),
+                babyLion.getIntroduction()
+        );
+    }

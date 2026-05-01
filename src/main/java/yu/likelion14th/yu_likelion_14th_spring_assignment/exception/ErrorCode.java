@@ -9,7 +9,8 @@ public enum ErrorCode {
 
     // 아기사자 관련
     BABYLION_NOT_FOUND(404,"아기사자를 찾을 수 없습니다."),
-
+    STUDENT_ID_DUPLICATED(409,"학번은 중복 불가 입니다."),
+    EMAIL_DUPLICATE(409,"이메일은 중복 불가 입니다.")
     // 일반 오류
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류입니다.");
 
