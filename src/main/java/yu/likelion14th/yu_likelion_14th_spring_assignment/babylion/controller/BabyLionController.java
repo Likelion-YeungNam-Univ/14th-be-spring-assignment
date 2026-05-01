@@ -53,7 +53,7 @@ public class BabyLionController {
     @GetMapping("/{id}")
     public ResponseEntity<BabyLionContactResDTO> getBabyLionContact(
             @PathVariable Long id){
-        BabyLionContactResDto response = babyLionService.getBabyLionContact(id);
+        BabyLionContactResDTO response = babyLionService.getBabyLionContact(id);
         return ResponseEntity.ok(response);
     }
 
@@ -63,7 +63,7 @@ public class BabyLionController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateBabyLion(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateBabyLionReqDto requestDto
+            @Valid @RequestBody UpdateBabyLionReqDTO requestDto
     ) {
         babyLionService.updateBabyLion(id, requestDto);
         return ResponseEntity.ok().build();
