@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class BabyLion {
      * - 제약: 중복 방지 (Unique)
      * - 주의: Repository 저장 시 자동 생성되며, 직접 초기화 및 수정 불가
      */
+
     public Long id;
 
     /**
