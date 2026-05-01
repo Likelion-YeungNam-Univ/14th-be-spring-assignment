@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorCode {
 
-    // 아기사자 관련
-    BABYLION_NOT_FOUND(404,"아기사자를 찾을 수 없습니다."),
-
-    // 일반 오류
+    BABYLION_NOT_FOUND(404, "아기사자를 찾을 수 없습니다."),
+    DUPLICATE_STUDENT_ID(400, "이미 존재하는 학번입니다."),
+    DUPLICATE_EMAIL(400, "이미 존재하는 이메일입니다."),
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류입니다.");
 
     // 추가하려면 마지막에만 세미콜론 처리
