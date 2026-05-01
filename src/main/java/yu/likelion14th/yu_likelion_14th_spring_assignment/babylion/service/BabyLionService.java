@@ -10,6 +10,7 @@ import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLi
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.repository.InMemoryBabyLionRepository;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.CustomException;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.exception.ErrorCode;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +21,9 @@ public class BabyLionService {
     /**
      *아기사자 등록
      */
-    public void createBabyLion(CreatebabyLionReqDTO reqDTO){
+    public void createBabyLion(CreateBabyLionReqDTO reqDTO){
         uniEmail(reqDTO.getEmail());
-        uniStudentId(reqDTO.getStudentId);
+        uniStudentId(reqDTO.getStudentId());
         BabyLion babyLion = reqDTO.toEntity();
         babyLionRepository.save(babyLion);
     }
@@ -30,7 +31,7 @@ public class BabyLionService {
     /**
      *아기사자 조회(전체 + 학년별 필터 조회
      */
-    public List<BabyLionResDTO> getBabyLions(Integer grade){
+    public List<BabyLionListResDTO> getBabyLions(Integer grade){
         return babyLionRepository.findAll()
                 .stream()
                 .filter(babyLion -> grade == null || babyLion.getGrade().equals(grade))
@@ -48,17 +49,17 @@ public class BabyLionService {
     /**
      *아기사자 일부 정보 수정
      */
-    public void updateBabyLion(Long id, UpdateBabyLionReqDto requestDto) {
+    public void updateBabyLion(Long id, UpdateBabyLionReqDTO requestDto) {
         BabyLion target = findBabyLionById(id);
         uniEmail(requestDto.getEmail());
         BabyLion updateBabyLion = BabyLion.builder()
                 .id(target.getId())
-                .studentid(target.getStudentId())
+                .studentId(target.getStudentId())
                 .name(requestDto.getName() != null ? requestDto.getName() : target.getName())
                 .grade(requestDto.getGrade() != null ? requestDto.getGrade() : target.getGrade())
                 .email(requestDto.getEmail() != null ? requestDto.getEmail() : target.getEmail())
-                .phoneNumber(requestDto.getPhoneNumber != null ? requestDto.getPhoneNumber() : target.getPhoneNumber())
-                .introduction(requestDto.getIntroduction != null ? requestDto.getIntroduction() : target.getIntroduction())
+                .phoneNumber(requestDto.getPhoneNumber() != null ? requestDto.getPhoneNumber() : target.getPhoneNumber())
+                .introduction(requestDto.getIntroduction() != null ? requestDto.getIntroduction() : target.getIntroduction())
                 .build();
 
         babyLionRepository.save(updateBabyLion);
@@ -68,7 +69,7 @@ public class BabyLionService {
      *아기사자 엔티티 불러오기 (일관 처리)
      */
     private BabyLion findBabyLionById(Long id){
-        return babyLionRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND))
+        return babyLionRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BABYLION_NOT_FOUND));
     }
 
     /**

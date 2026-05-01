@@ -3,14 +3,20 @@ package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDto;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDto;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionContactResDto;
-import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionListResDto;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.CreateBabyLionReqDTO;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request.UpdateBabyLionReqDTO;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionContactResDTO;
+import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.response.BabyLionListResDTO;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.service.BabyLionService;
 import java.util.List;
 
@@ -36,8 +42,8 @@ public class BabyLionController {
      */
     @GetMapping
     public ResponseEntity<List<BabyLionListResDTO>> getBabyLions(
-        @RequestParam(required = false) Interger grade){ /// 파라미터가 없으면 전체로 반환
-        List<BabyLionListResDTO> response = babyLionService.getLions(grade);
+        @RequestParam(required = false) Integer grade){ /// 파라미터가 없으면 전체로 반환
+        List<BabyLionListResDTO> response = babyLionService.getBabyLions(grade);
         return ResponseEntity.ok(response);
     }
 

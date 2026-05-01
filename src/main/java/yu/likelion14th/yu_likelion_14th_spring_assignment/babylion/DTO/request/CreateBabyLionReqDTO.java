@@ -2,6 +2,7 @@ package yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import yu.likelion14th.yu_likelion_14th_spring_assignment.babylion.entity.BabyLion;
 
 @Getter
